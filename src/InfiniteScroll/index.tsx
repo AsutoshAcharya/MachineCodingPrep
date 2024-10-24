@@ -35,16 +35,6 @@ const InfiniteScroll = () => {
 
   return (
     <div
-      style={{
-        width: "100dvw",
-        height: "100dvh",
-        background: "cyan",
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        overflow: "auto",
-        flexDirection: "column",
-      }}
       className="container"
       onScroll={(e) => {
         const { scrollTop, scrollHeight, offsetHeight } = e.currentTarget;
