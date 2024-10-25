@@ -20,7 +20,6 @@ const StarComponent = () => {
 
           gap: "10px",
         }}
-        onMouseOut={() => setHoveredStar(0)}
       >
         {totalStars.map((star, idx) => (
           <div
@@ -34,6 +33,7 @@ const StarComponent = () => {
               transition: "color 0.4s ease-in-out",
             }}
             onMouseOver={() => setHoveredStar(star)}
+            onMouseOut={() => setHoveredStar(0)}
             onClick={() => setRating(star)}
           >
             ★
