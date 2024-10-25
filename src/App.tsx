@@ -1,11 +1,13 @@
 import "./App.css";
-import InfiniteScroll from "./InfiniteScroll";
-import VirtualizedList from "./VirtualizedList";
+// import InfiniteScroll from "./InfiniteScroll";
+import StarComponent from "./StarComponent";
+// import VirtualizedList from "./VirtualizedList";
 function App() {
   return (
     <div className="App">
       {/* <InfiniteScroll /> */}
-      <VirtualizedList />
+      {/* <VirtualizedList /> */}
+      <StarComponent />
     </div>
   );
 }
