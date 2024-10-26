@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import AutoCompleteInput from "./AutoCompleteInput";
 import useDebounce from "../hooks/useDebounce";
 import useCache from "../hooks/useCache";
+import SuggetionList from "./SuggetionList";
 //https://dummyjson.com/recipes/search?q&limit=5
 const defaultData = ["apple", "banana", "cherry"];
+
 const AutoComplete = () => {
   const [searchQuery, setSearchQuery] = useState(""); //to set the input search data
   const debouncedSearch = useDebounce(searchQuery, 1000); // for api call
@@ -36,15 +38,19 @@ const AutoComplete = () => {
   }, [debouncedSearch]);
   return (
     <div className="container">
-      <AutoCompleteInput
-        title="AutoComplete/TypeHeads"
-        defaultData={defaultData}
-        searchQuery={searchQuery}
-        dataToRender={cache[searchQuery] || []}
-        placeholder="Search Recipe"
-        onChange={(e) => setSearchQuery(e.target.value)}
-        loading={loading}
-      />
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <AutoCompleteInput
+          title="AutoComplete/TypeHeads"
+          searchQuery={searchQuery}
+          placeholder="Search Recipe"
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <SuggetionList
+          dataToRender={cache[searchQuery] || []}
+          loading={loading}
+          searchQuery={searchQuery}
+        />
+      </div>
     </div>
   );
 };
