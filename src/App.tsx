@@ -1,4 +1,5 @@
 import "./App.css";
+import AutoComplete from "./AutoComplete";
 // import InfiniteScroll from "./InfiniteScroll";
 import StarComponent from "./StarComponent";
 // import VirtualizedList from "./VirtualizedList";
@@ -7,7 +8,8 @@ function App() {
     <div className="App">
       {/* <InfiniteScroll /> */}
       {/* <VirtualizedList /> */}
-      <StarComponent />
+      {/* <StarComponent /> */}
+      <AutoComplete />
     </div>
   );
 }

@@ -15,7 +15,7 @@ code {
 .container{
   width: 100dvw;
   height: 100dvh;
-  background: rgb(65, 102, 93);
+  background: white;
   display: flex;
   align-items: center;
   gap: 10px;
