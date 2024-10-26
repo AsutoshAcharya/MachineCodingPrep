@@ -1,5 +1,5 @@
 import { FC, InputHTMLAttributes, useEffect, useState } from "react";
-import SearchListItem from "./SearchListItem";
+import SuggetionList from "./SuggetionList";
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string;
   defaultData: Array<string>;
@@ -76,57 +76,12 @@ const AutoCompleteInput: FC<Props> = ({
           }}
           {...rest}
         />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            width: "95%",
-            height: "300px",
-            boxShadow: "0px 0px 5px 1px black",
-            borderRadius: "5px",
-            overflow: "auto",
-            padding: "10px",
-          }}
-        >
-          {dataToRender
-            // .concat(defaultData)
-            // .concat(defaultData)
-            // .concat(defaultData)
-            ?.map((item) => (
-              <SearchListItem
-                key={item}
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  height: "40px",
-                  background: selectedItem === item ? "#99c4ab" : "white",
-                  cursor: "pointer",
-                  flexShrink: 0,
-                  borderRadius: "5px",
-                  //   color: selectedItem === item ? "white" : "black",
-                }}
-                item={item}
-                searchQuery={searchQuery}
-              />
-            ))}
-          {loading && (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "#db486d",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#FFF",
-              }}
-            >
-              Loading...
-            </div>
-          )}
-          {dataToRender?.length === 0 && !loading && <div>No Recipe Found</div>}
-        </div>
+        <SuggetionList
+          dataToRender={dataToRender}
+          selectedItem={selectedItem}
+          searchQuery={searchQuery}
+          loading={loading}
+        />
       </div>
     </div>
   );

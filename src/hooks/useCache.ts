@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useCache = (searchedQuery: string) => {
   const [cache, setCache] = useState<Record<string, string[]>>({});
