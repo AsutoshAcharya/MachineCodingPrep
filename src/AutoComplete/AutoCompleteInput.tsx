@@ -25,21 +25,35 @@ const AutoCompleteInput: FC<Props> = ({
   }, [loading, dataToRender]);
 
   useEffect(() => {
-    window.addEventListener("keydown", (e) => {
+    function handleButtonSwitch(e: KeyboardEvent) {
+      if (loading) return;
       if (e.key === "ArrowDown" && dataToRender.length > 0) {
         setSelectedItem((prev: string) => {
           const currIndex = dataToRender?.indexOf(prev);
-          //   console.log(currIndex);
-          if (currIndex === dataToRender?.length - 1) {
+          if (currIndex === dataToRender?.length - 1 || currIndex === -1) {
             return dataToRender[0];
           }
-          return dataToRender[dataToRender?.indexOf(prev) + 1];
+          return dataToRender[currIndex + 1];
         });
       }
       if (e.key === "ArrowUp" && dataToRender.length > 0) {
+        setSelectedItem((prev: string) => {
+          const currIndex = dataToRender?.indexOf(prev);
+          if (currIndex === 0) {
+            return dataToRender[dataToRender.length - 1];
+          }
+          if (currIndex <= dataToRender.length - 1) {
+            return dataToRender[currIndex - 1];
+          }
+          return "";
+        });
       }
-    });
-  }, [dataToRender]);
+    }
+    window.addEventListener("keydown", handleButtonSwitch);
+    return () => {
+      window.removeEventListener("keydown", handleButtonSwitch);
+    };
+  }, [dataToRender, loading]);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <h1>{title}</h1>
