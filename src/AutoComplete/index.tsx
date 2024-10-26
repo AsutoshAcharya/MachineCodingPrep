@@ -14,19 +14,20 @@ const AutoComplete = () => {
 
   async function fetchSuggetions() {
     if (Object.keys(cache).includes(debouncedSearch)) return;
+    setLoading(true);
     await fetch(
       `https://dummyjson.com/recipes/search?q=${debouncedSearch}&limit=10`
     )
       .then((resp) => resp.json())
       .then((result) => {
         const { recipes } = result;
-
         if (recipes?.length === 0) return;
         console.log(recipes);
         const recipeNames = recipes?.map((r: any) => r?.name);
         console.log(recipeNames);
         updateCache(recipeNames);
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const AutoComplete = () => {
         title="AutoComplete/TypeHeads"
         defaultData={defaultData}
         searchQuery={searchQuery}
-        dataToRender={cache[searchQuery]}
+        dataToRender={cache[searchQuery] || []}
         placeholder="Search Recipe"
         onChange={(e) => setSearchQuery(e.target.value)}
         loading={loading}

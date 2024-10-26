@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes, useState } from "react";
+import { FC, InputHTMLAttributes, useEffect, useState } from "react";
 import SearchListItem from "./SearchListItem";
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string;
@@ -15,7 +15,31 @@ const AutoCompleteInput: FC<Props> = ({
   loading,
   ...rest
 }) => {
-  const [selectedItem, setSelectedItem] = useState(dataToRender?.at(0) || "");
+  const [selectedItem, setSelectedItem] = useState("");
+  console.log(dataToRender);
+  console.log(selectedItem);
+  useEffect(() => {
+    if (!loading) {
+      setSelectedItem(dataToRender?.at(0) || "");
+    }
+  }, [loading, dataToRender]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" && dataToRender.length > 0) {
+        setSelectedItem((prev: string) => {
+          const currIndex = dataToRender?.indexOf(prev);
+          //   console.log(currIndex);
+          if (currIndex === dataToRender?.length - 1) {
+            return dataToRender[0];
+          }
+          return dataToRender[dataToRender?.indexOf(prev) + 1];
+        });
+      }
+      if (e.key === "ArrowUp" && dataToRender.length > 0) {
+      }
+    });
+  }, [dataToRender]);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <h1>{title}</h1>
@@ -72,6 +96,22 @@ const AutoCompleteInput: FC<Props> = ({
                 searchQuery={searchQuery}
               />
             ))}
+          {loading && (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "#db486d",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#FFF",
+              }}
+            >
+              Loading...
+            </div>
+          )}
+          {dataToRender?.length === 0 && !loading && <div>No Recipe Found</div>}
         </div>
       </div>
     </div>
