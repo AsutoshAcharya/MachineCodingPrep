@@ -100,7 +100,7 @@ const AutoCompleteInput: FC<Props> = ({
                   width: "100%",
                   textAlign: "center",
                   height: "40px",
-                  background: selectedItem === item ? "grey" : "white",
+                  background: selectedItem === item ? "#99c4ab" : "white",
                   cursor: "pointer",
                   flexShrink: 0,
                   borderRadius: "5px",
