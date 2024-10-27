@@ -5,10 +5,12 @@ interface Props {
   searchQuery: string;
   loading: boolean;
 }
+const itemHeight = 40;
+
 const SuggetionList: FC<Props> = ({ dataToRender, searchQuery, loading }) => {
   const [selectedItem, setSelectedItem] = useState("");
-  console.log(dataToRender);
-  console.log(selectedItem);
+  // console.log(dataToRender);
+  // console.log(selectedItem);
   useEffect(() => {
     if (!loading) {
       setSelectedItem(dataToRender?.at(0) || "");
@@ -18,11 +20,19 @@ const SuggetionList: FC<Props> = ({ dataToRender, searchQuery, loading }) => {
   useEffect(() => {
     function handleButtonSwitch(e: KeyboardEvent) {
       if (loading) return;
+      const el = document.getElementById("suggetion-list");
       if (e.key === "ArrowDown" && dataToRender.length > 0) {
         setSelectedItem((prev: string) => {
           const currIndex = dataToRender?.indexOf(prev);
           if (currIndex === dataToRender?.length - 1 || currIndex === -1) {
+            if (el) {
+              el.scrollTop = 0;
+            }
             return dataToRender[0];
+          }
+
+          if (el) {
+            el.scrollTop = el.scrollTop + itemHeight;
           }
           return dataToRender[currIndex + 1];
         });
@@ -31,9 +41,15 @@ const SuggetionList: FC<Props> = ({ dataToRender, searchQuery, loading }) => {
         setSelectedItem((prev: string) => {
           const currIndex = dataToRender?.indexOf(prev);
           if (currIndex === 0) {
+            if (el) {
+              el.scrollTop = dataToRender?.length * itemHeight;
+            }
             return dataToRender[dataToRender.length - 1];
           }
           if (currIndex <= dataToRender.length - 1) {
+            if (el) {
+              el.scrollTop = el.scrollTop - itemHeight;
+            }
             return dataToRender[currIndex - 1];
           }
           return "";
@@ -58,24 +74,9 @@ const SuggetionList: FC<Props> = ({ dataToRender, searchQuery, loading }) => {
         overflow: "auto",
         padding: "10px",
       }}
+      id="suggetion-list"
     >
-      {dataToRender?.map((item) => (
-        <SearchListItem
-          key={item}
-          style={{
-            width: "100%",
-            textAlign: "center",
-            height: "40px",
-            background: selectedItem === item ? "#99c4ab" : "white",
-            cursor: "pointer",
-            flexShrink: 0,
-            borderRadius: "5px",
-          }}
-          item={item}
-          searchQuery={searchQuery}
-        />
-      ))}
-      {loading && (
+      {loading ? (
         <div
           style={{
             width: "100%",
@@ -89,6 +90,23 @@ const SuggetionList: FC<Props> = ({ dataToRender, searchQuery, loading }) => {
         >
           Loading...
         </div>
+      ) : (
+        dataToRender?.map((item) => (
+          <SearchListItem
+            key={item}
+            style={{
+              width: "100%",
+              textAlign: "center",
+              height: itemHeight,
+              background: selectedItem === item ? "#99c4ab" : "white",
+              cursor: "pointer",
+              flexShrink: 0,
+              borderRadius: "5px",
+            }}
+            item={item}
+            searchQuery={searchQuery}
+          />
+        ))
       )}
       {dataToRender?.length === 0 && !loading && <div>No Recipe Found</div>}
     </div>
