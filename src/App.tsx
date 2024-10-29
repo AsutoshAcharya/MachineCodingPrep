@@ -1,15 +1,18 @@
 import "./App.css";
-import AutoComplete from "./AutoComplete";
+import ProgressBar from "./ProgressBar";
+
+// import AutoComplete from "./AutoComplete";
 // import InfiniteScroll from "./InfiniteScroll";
-import StarComponent from "./StarComponent";
+// import StarComponent from "./StarComponent";
 // import VirtualizedList from "./VirtualizedList";
 function App() {
   return (
-    <div className="App">
+    <div>
       {/* <InfiniteScroll /> */}
       {/* <VirtualizedList /> */}
       {/* <StarComponent /> */}
-      <AutoComplete />
+      {/* <AutoComplete /> */}
+      <ProgressBar />
     </div>
   );
 }
