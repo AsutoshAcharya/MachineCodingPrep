@@ -1,4 +1,5 @@
 import "./App.css";
+import Modal from "./Modal";
 import ProgressBar from "./ProgressBar";
 
 // import AutoComplete from "./AutoComplete";
@@ -12,7 +13,8 @@ function App() {
       {/* <VirtualizedList /> */}
       {/* <StarComponent /> */}
       {/* <AutoComplete /> */}
-      <ProgressBar />
+      {/* <ProgressBar /> */}
+      <Modal />
     </div>
   );
 }
